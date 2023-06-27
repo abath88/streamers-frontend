@@ -1,0 +1,29 @@
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.username {
+    font-family: inherit;
+    padding: 10px;
+    margin: 2px 0;
+}
+
+.password {
+    font-family: inherit;
+    padding: 10px;
+    margin: 2px 0;
+}
+
+.submit {
+    font-family: inherit;
+    margin: 2px 0;
+    padding: 10px 20px;
+    align-self: flex-end;
+    cursor: pointer;
+}
+
+.register {
+    cursor: pointer;
+    font-size: 12px;
+}

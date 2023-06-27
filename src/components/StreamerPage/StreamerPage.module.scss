@@ -1,0 +1,40 @@
+.block {
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 3px 6px hsla(0, 0%, 69%, 0.16), 0 3px 6px hsla(0, 0%, 69%, 0.23);
+    min-width: 480px;
+    max-width: 600px;
+}
+
+.body {
+    display: flex;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.profile {
+    width: 80px;
+    height: 80px;
+    border-radius: 100%;
+}
+
+.name {
+    
+}
+
+.nameDescription {
+    margin-left: 40px;
+    display: flex;
+    flex-direction: column;;
+}
+
+.description {
+
+}
+
+.platform {
+
+}

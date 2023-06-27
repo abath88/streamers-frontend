@@ -1,0 +1,27 @@
+.container {
+    display: flex;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 10px;
+    display: flex;
+    flex-direction: row;
+    min-height: 100%;
+    align-items: center;
+
+    @media screen and (min-width: 576px) {
+        padding: 0;
+        max-width: 540px;
+    }
+
+    @media screen and (min-width: 768px) {
+        max-width: 720px;
+    }
+
+    @media screen and (min-width: 992px) {
+        max-width: 960px;
+    }
+
+    @media screen and (min-width: 1200px) {
+        max-width: 1140px;
+    }
+}
