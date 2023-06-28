@@ -14,7 +14,6 @@ const StreamerForm = () => {
     dispatch(addStreamer({name, description, platform}))
   }
 
-  const isLoading = useSelector((state) => state.streamers.addLoading)
   const error = useSelector((state) => state.streamers.addError)
   
   return (
