@@ -12,6 +12,9 @@ const StreamerForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(addStreamer({name, description, platform}))
+    setName('');
+    setDescription('');
+    setPlatform('Twitch');
   }
 
   const error = useSelector((state) => state.streamers.addError)

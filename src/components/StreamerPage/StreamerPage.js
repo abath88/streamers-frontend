@@ -5,6 +5,8 @@ import { useEffect } from 'react';
 import { fetchStreamer } from '../../redux/slice/streamerSlice';
 import profile from '../../profile.png'
 import Vote from '../Vote/Vote';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTiktok, faTwitch, faYoutube } from '@fortawesome/free-brands-svg-icons';
 
 const StreamerPage = () => {
   const { id } = useParams();
@@ -17,6 +19,17 @@ const StreamerPage = () => {
   const streamer = useSelector((state) => {return state.streamers.streamer})
   const isLoading = useSelector((state) => state.streamers.fetchLoading)
   const error = useSelector((state) => state.streamers.fetchError)
+
+  const renderPlatformIcon = (platform) => {
+    switch(platform) {
+      case 'Twitch': return <FontAwesomeIcon icon={faTwitch} />
+      case 'YouTube': return <FontAwesomeIcon icon={faYoutube} />
+      case 'TikTok': return <FontAwesomeIcon icon={faTiktok} />
+      case 'Kick': return 'Kick'
+      case 'Rumble': return 'Rumble'
+      default: return <FontAwesomeIcon icon={faTwitch} />
+    }
+  }
 
   if (isLoading) {
     return <div>loading...</div>
@@ -39,9 +52,8 @@ const StreamerPage = () => {
           </div>
         </div>
         <div className={styles.footer}>
-        <h2>{streamer.platform}</h2>
-        <Vote streamer={streamer}/>
-          
+          <h2>{renderPlatformIcon(streamer.platform)}</h2>
+          <Vote streamer={streamer}/>
         </div>
       </>
       }
