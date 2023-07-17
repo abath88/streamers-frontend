@@ -55,6 +55,13 @@ const StreamerPage = () => {
           <h2>{renderPlatformIcon(streamer.platform)}</h2>
           <Vote streamer={streamer}/>
         </div>
+        {streamer.hasOwnProperty('streams') && 
+        <ul className={styles.streams}>
+          {streamer.streams.map(stream => 
+            <li>{stream.title} {stream.description} {stream.game} {stream.startDate} {stream.endDate}</li>
+          )}
+        </ul>
+        }
       </>
       }
     </div> 

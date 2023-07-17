@@ -11,7 +11,10 @@ const initialState = {
   addLoading: false,
 
   voteLoading: false,
-  voteError: null
+  voteError: null,
+
+  streamLoading: false,
+  streamError: null
 }
 
 const backendURL = 'http://localhost:3001'
@@ -98,6 +101,35 @@ export const voteSteamer = createAsyncThunk(
   }
 )
 
+export const addStream = createAsyncThunk(
+  'streamer/stream',
+  async ({ title, description, game, startDate, endDate, id }, { getState, rejectWithValue }) => {
+    try {
+      const state = getState();
+      const token = state.auth.token;
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Authorization': "Bearer " + token
+        },
+      };
+      const { data } = await axios.post(
+        `${backendURL}/api/stream`,
+        { title, description, game, startDate, endDate, id },
+        config
+      );
+      return data;
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  }
+)
+
 export const streamerSlice = createSlice({
   name: 'streamer',
   initialState,
@@ -112,7 +144,7 @@ export const streamerSlice = createSlice({
     })
     builder.addCase(fetchSteamers.rejected, (state, action) => {
       state.fetchLoading = false
-      state.fetchError = action.payload.error.message
+      state.fetchError = action.error.message
     })
 
     builder.addCase(fetchStreamer.pending, (state) => {
@@ -125,7 +157,7 @@ export const streamerSlice = createSlice({
     })
     builder.addCase(fetchStreamer.rejected, (state, action) => {
       state.fetchLoading = false
-      state.fetchError = action.payload.error.message
+      state.fetchError = action.error.message
     })
 
     builder.addCase(addStreamer.pending, (state) => {
@@ -150,13 +182,26 @@ export const streamerSlice = createSlice({
       state.streamer = action.payload.data
       
       state.streamers = state.streamers.map(el => {
-        if(el._id === action.payload.data._id) {console.log(action.payload.data._id); return action.payload.data}
+        if(el._id === action.payload.data._id) {return action.payload.data}
         else return el
       }) 
     })
     builder.addCase(voteSteamer.rejected, (state, action) => {
       state.voteLoading = false
       state.voteError = action.error.message
+    })
+
+    /* STREAM */
+    builder.addCase(addStream.pending, (state) => {
+      state.streamLoading = true
+    })
+    builder.addCase(addStream.fulfilled, (state, action) => {
+      state.streamLoading = false
+      state.steamError = null;
+    })
+    builder.addCase(addStream.rejected, (state, action) => {
+      state.streamLoading = false
+      state.steamError = action.error.message
     })
   }
 })
